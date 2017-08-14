@@ -14,8 +14,8 @@ $fb = new Facebook\Facebook([
 $helper = $fb->getRedirectLoginHelper();
 try {
     $accessToken = $helper->getAccessToken();
-    $mio=$fb->get('359734667794410?fields=access_token',$accessToken);
-    print_r($mio);
+    $response=$fb->get('359734667794410?fields=access_token',$accessToken);
+    print_r($response->getGraphNode());
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
     // When Graph returns an error
     echo 'Graph returned an error: ' . $e->getMessage();
@@ -25,13 +25,12 @@ try {
     echo 'Facebook SDK returned an error: ' . $e->getMessage();
     exit;
 }
-
 if (isset($accessToken)) {
     // Logged in!
     //$_SESSION['facebook_access_token'] = (string) $accessToken;
     $filePath = 'photo/access_token.txt';
     $file = fopen($filePath, 'w');
-    fwrite($file, (string) $mio);
+    fwrite($file, (string)  $accessToken);
     fclose($file);
     //header("location: http://localhost:50000/");
     // Now you can redirect to another page and use the

@@ -19,10 +19,8 @@ set_time_limit(0);
 date_default_timezone_set('UTC');
 
 require __DIR__.'/vendor/autoload.php';
+$filePath = 'photo/log_f.txt';
 
-$myfile = fopen("photo/access_token.txt", "r") or die("Unable to open file!");
-$a_token = fread($myfile,filesize("photo/access_token.txt"));
-fclose($myfile);
 
 if($invia) {
 
@@ -34,21 +32,23 @@ if($invia) {
 
     $data = [
         'message' => 'Selfie Machine',
-        'source' => $fb->fileToUpload("$filePath"),
+        'source' => $fb->fileToUpload("$filePath")
     ];
 
     try {
         // Returns a `Facebook\FacebookResponse` object
-        //$response = $fb->post('/me/photos', $data,  $a_token);
-        /*$response = $fb->get('/me/accounts', 'EAAWGbFNt09YBADo2YO6IZCpkTVEqUCTnXYawiOZCkoUI2n6aQDY44bcpvUEAmvIpCKDZAv5nac5NyNT02VLOVk1MLg2aVdK9gnAz1tKVFHgWGMTCSCzq9hiFYhf2XXzKsf2FtGZBGUbde4MV1iXZALXph9rLWD8gZD');
-        $filePath = 'photo/pages_token.txt';
-        $file = fopen($filePath, 'w');
-        fwrite($file, json_encode($response));
-        fclose($file);*/
+        //$response = $fb->post('/359734667794410/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
+        $response = $fb->post('/359931754441368/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
     } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        $file = fopen($filePath, 'w');
+        fwrite($file, $e->getMessage());
+        fclose($file);
         echo 'Graph returned an error: ' . $e->getMessage();
         exit;
     } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        $file = fopen($filePath, 'w');
+        fwrite($file, $e->getMessage());
+        fclose($file);
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
         exit;
     }
