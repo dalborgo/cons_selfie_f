@@ -3,6 +3,10 @@ $invia=false;
 $invia=true;
 header('Access-Control-Allow-Origin: *');
 $img=$_POST["image"];
+$token_accesso=$_POST["token_accesso"];
+$id_pagina=$_POST["id_pagina"];
+$id_album=$_POST["id_album"];
+$token_pagina=$_POST["token_pagina"];
 $imgData = str_replace('data:image/jpeg;base64,', '', $img);
 $imgData = str_replace(' ','+',$imgData );
 $imgData = base64_decode($imgData);
@@ -38,7 +42,13 @@ if($invia) {
     try {
         // Returns a `Facebook\FacebookResponse` object
         //$response = $fb->post('/359734667794410/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
-        $response = $fb->post('/359931754441368/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
+        if (isset($id_album)) {
+            $response = $fb->post("/$id_album/photos", $data, $token_pagina);
+        }else if(isset($id_pagina)){
+            $response = $fb->post("/$id_pagina/photos", $data,  $token_pagina);
+        }else if(isset($token_accesso)){
+            $response = $fb->post('/me/photos', $data,  $token_accesso);
+        }
     } catch(Facebook\Exceptions\FacebookResponseException $e) {
         $file = fopen($filePath2, 'w');
         fwrite($file, $e->getMessage());
