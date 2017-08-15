@@ -19,7 +19,7 @@ set_time_limit(0);
 date_default_timezone_set('UTC');
 
 require __DIR__.'/vendor/autoload.php';
-$filePath = 'photo/log_f.txt';
+$filePath2 = 'photo/log_f.txt';
 
 
 if($invia) {
@@ -40,13 +40,13 @@ if($invia) {
         //$response = $fb->post('/359734667794410/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
         $response = $fb->post('/359931754441368/photos', $data,  'EAAWGbFNt09YBAJmGd0s2Lj0WabZCxgpXpuqiYz4rvqCxAE71IfODwvjQpB0SAvX1aj9MEJFHQIdtUQZAWnhUzT5ovwZCBlW6O2QmmZBBR8VXod7GtxNaNJmi2LE9gdhUd7H0ZAdDXtfMzL3D2N7YBUOZA3eK9GpapIgkFxpXeHaQZDZD');
     } catch(Facebook\Exceptions\FacebookResponseException $e) {
-        $file = fopen($filePath, 'w');
+        $file = fopen($filePath2, 'w');
         fwrite($file, $e->getMessage());
         fclose($file);
         echo 'Graph returned an error: ' . $e->getMessage();
         exit;
     } catch(Facebook\Exceptions\FacebookSDKException $e) {
-        $file = fopen($filePath, 'w');
+        $file = fopen($filePath2, 'w');
         fwrite($file, $e->getMessage());
         fclose($file);
         echo 'Facebook SDK returned an error: ' . $e->getMessage();
